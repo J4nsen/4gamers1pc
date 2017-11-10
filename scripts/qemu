@@ -1,0 +1,76 @@
+#!/usr/bin/python
+import sys
+from subprocess import call
+import json
+import os
+
+# This class provides the functionality we want. You only need to look at
+# this if you want to know how this works. It only needs to be defined
+# once, no need to muck around with its internals.
+class switch(object):
+    def __init__(self, value):
+        self.value = value
+        self.fall = False
+    def __iter__(self):
+        """Return the match method once, then stop"""
+        yield self.match
+        raise StopIteration
+
+    def match(self, *args):
+        """Indicate whether or not to enter a case suite"""
+        if self.fall or not args:
+            return True
+        elif self.value in args: # changed for v1.5, see below
+            self.fall = True
+            return True
+        else:
+            return False
+        
+# Create Snapshot
+def op_prepare(vm_settings):
+    print(vm_settings["name"])
+    for lv in vm_settings["lvs"]:
+        call(["lvcreate", "-L", lv['size'], "-s", "-n", lv['name'], '/dev/'+lv['vg'] +'/'+ lv['source']])
+
+# Delete Snapshot
+def op_release(vm_settings):
+    print(vm_settings["name"])
+    for lv in vm_settings["lvs"]:
+        call(["lvremove", '-f', '/dev/' + lv['vg'] + '/' + lv['name']])
+
+# Vars
+guest_name = sys.argv[1]
+operation = sys.argv[2]
+sub_operation = sys.argv[3]
+extra_argument = sys.argv[4]
+dir_path = os.path.dirname(os.path.realpath(__file__))
+vm_settings = {}
+
+# Load Json
+with open(dir_path+"/"+'settings.json') as settings_file:  
+    settings = json.load(settings_file)
+
+# Check if VM has a config in JSON File
+for k in settings["vms"]:
+    if k["name"] == guest_name:
+        vm_settings = k
+
+if vm_settings == {}:
+    print('no settings found')
+    quit()
+
+# Work!
+for case in switch(operation):
+    print('operation:')
+    if case('prepare'):
+        print('prepare')
+        op_prepare(vm_settings)
+        break
+    
+    if case('release'):
+        print('release')
+        op_release(vm_settings)
+        break
+
+    if case():
+        print('default')

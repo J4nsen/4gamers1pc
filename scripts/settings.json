@@ -1,0 +1,41 @@
+{
+"vms":
+    [
+        {
+            "name": "vm-cpu0-1",
+            "lvs":
+                [
+                    {
+                        "source": "games",
+                        "name": "games-snap-1",
+                        "size": "20G",
+                        "vg": "ssd"
+                    }
+                ]
+        },
+        {
+            "name": "vm-cpu1-0",
+            "lvs":
+                [
+                    {
+                        "source": "games",
+                        "name": "games-snap-2",
+                        "size": "20G",
+                        "vg": "ssd"
+                    }
+                ]
+        },
+        {
+            "name": "vm-cpu1-1",
+            "lvs":
+                [
+                    {
+                        "source": "games",
+                        "name": "games-snap-3",
+                        "size": "20G",
+                        "vg": "ssd"
+                    }
+                ]
+        }
+    ]
+} 
