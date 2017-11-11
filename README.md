@@ -56,6 +56,7 @@ With two of them I could build my own "4 Gamers, 1 PC"-setup. I could not resist
 * **RAM:** 64 GB of Hynix HMT31GR7BFR4C-H9 8GB DIMM DDR3 1333 MHz [200€]
   * ECC RAM
   * Much cheaper than non ECC-RAM and not slower. [8]
+* **SSD:** Two cheap 512GB SSDs in RAID0
 * **Cooler:** 2x Corsair CW-9060013-WW Hydro Series [180€]
   * Started with two Scythe Mugen 3, but switched to AIO watercooling, because the Mugens did not fit correctly. Furthermore I do not want to put too much stress on the mainboard.
 * **GPUs:** (Nvidia) GPUs with UEFI Support
@@ -76,7 +77,7 @@ With two of them I could build my own "4 Gamers, 1 PC"-setup. I could not resist
 * **PCIe Extenders:** 4x 50cm of shielded PCI-E Riser Cables by 3M [3] [400€]
   * I did not even try to use cheap unshielded ones. At the time of building the PC, these were the only ones available. Today, there are more [4].
 
-About 1600€ (without GPUs/Soundcard/Grakomat). Can be done much cheaper: Air cooling (~-100€), no Grakomat (=> Only three GPUs) (-400€) => 1100€
+About 1600€ (without GPUs/Soundcard/Grakomat/SSDs). Can be done much cheaper: Air cooling (~-100€), no Grakomat (=> Only three GPUs) (-400€) => 1100€
 ### Grakomat
 Four GPUs do not fit in the case, nor on the mainboard 
 (except if you use single-slotted GPUs). Three GPUs work, however adequate 
@@ -105,6 +106,7 @@ which made designing a lot easier. The files are located in the *cad/* directory
 ## Bugs/Problems
 * In the beginning I used the outer most PCI-E x4 slot (white color) with a GPU and saw some PCI-E link errors in the hosts log. They often resulted in a freeze of the VM. Sometimes Windows was able to reset the GPU driver and recover. Setting this port to PCI-E Gen 2 (from 3) in the UEFI fixed it. In the final setup a USB controller populates this port with no problems on Gen 3 speeds.
 * Some problem with an older GPU (EVGA GeForce GTX 660). The Kernel shows a lot of "PCIe Bus Error" (Bad TLP) messages. They did not result in any crashes, since the systen was able to correct them ("severity=Corrected"). Setting the PCIe generation to 2.0 fixes the problem for this specific card.
+* Tried to combine a large slow HDD with a SSD as a cache (bcachefs). Resulted in Kernel hangs when playing Overwatch. [11]
 * Some games/anti cheat engines detect that they are running in a VM and quit (e.g. CS:GO).
 * Heroes of the Storm is running bad on Windows 10 [10]. Rebooting to Windows 8 fixes that.
 * My newer Dell monitors sometimes flicker/go black for a short period of time. However, I think this has nothing to do with the VM setup, but with the length of the Displayport cables (4 meters). 
@@ -127,3 +129,4 @@ I've created an imgur album: https://imgur.com/a/Husi2
 * [8] https://www.pugetsystems.com/labs/articles/ECC-and-REG-ECC-Memory-Performance-560/
 * [9] https://www.reddit.com/r/VFIO/comments/74vokw/improved_pulse_audio_driver_for_qemu/
 * [10] https://www.redhat.com/archives/vfio-users/2017-January/msg00012.html
+* [11] http://www.spinics.net/lists/linux-bcache/msg04421.html
