@@ -46,7 +46,9 @@ With two of them I could build my own "4 Gamers, 1 PC"-setup. I could not resist
 
 ## Hardware
 * **Mainboard:** ASRock Rack EP2C602 [320€]
-  * It has enough PCI-E Slots for 4 GPUs and two USB3 controllers and built-in GPU. Additionally the two USB2 controllers in the chipset can individually be assigned to VMs. The host can still be controlled by a PS2 keyboard. IPMI!
+  * It has enough PCI-E Slots for 4 GPUs and two USB3 controllers and built-in GPU. Additionally the two USB2 controllers in the chipset can individually be assigned to VMs. The host can still be controlled by a PS2 keyboard. 
+  * IPMI (remote control of the system: Power on, Power off, Modify UEFI, Keyboard input, etc. Done in a browser.)
+  * Embedded graphics. This makes GPU passthrough easy, since the host can use this slow emedded GPU.
 * **CPUs:** 2x Intel E5-2670 [200€]
   * **Cheap**. ~100€ per CPU on eBay.
   * Turboboosts up to 3.3 GHz. ACS support. 40 PCIe lanes. 
